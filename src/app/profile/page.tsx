@@ -27,7 +27,7 @@ export default function ProfilePage() {
       <div className="project-heading"><p className="eyebrow">PROYEK / 2026</p><span className="project-status"><i/> PPB</span></div>
       <h2>Arsip kecil untuk<br/><em>kenangan besar.</em></h2>
       <p>RetroVault menggabungkan katalog koleksi, riwayat aset, dan ulasan dalam satu aplikasi web yang bisa dipasang di perangkat.</p>
-      <div className="project-meta"><span><Radio size={15}/> Praktikum Pengembangan dan Pemrograman Berbasis Web</span><span>SUPABASE · CLOUDINARY · NEXT.JS</span></div>
+      <div className="project-meta"><span><Radio size={15}/> Praktikum Pemrograman Perangkat Bergerak</span><span>SUPABASE · CLOUDINARY · NEXT.JS</span></div>
       <a href="/games" className="profile-cta">Jelajahi koleksi <ArrowUpRight size={16}/></a>
     </section>
     <footer className="profile-footer"><span>RETROVAULT</span><span>Dibuat dengan rasa ingin tahu dan nostalgia.</span><span>© 2026</span></footer>

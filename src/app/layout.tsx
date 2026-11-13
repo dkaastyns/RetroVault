@@ -5,6 +5,7 @@ import './pwa.css';
 import './favorites.css';
 import './loading-review.css';
 import './profile.css';
+import './liquid-glass.css';
 import { BottomNav } from '@/components/BottomNav';
 import { ServiceWorker } from '@/components/ServiceWorker';
 import { PwaExperience } from '@/components/PwaExperience';

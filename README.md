@@ -8,6 +8,7 @@ RetroVault adalah Progressive Web App untuk mengelola inventaris game konsol kla
 - **Dibuat oleh:** Ahmad Dika Styansah
 - **NIM:** 21120124130052
 - **Kelompok:** 23
+- **Mata kuliah:** Praktikum Pemrograman Perangkat Bergerak
 - **Tahun:** 2026
 
 ## Teknologi
