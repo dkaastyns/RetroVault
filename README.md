@@ -61,7 +61,7 @@ Jangan commit `.env.local` atau kredensial rahasia. File tersebut sudah dikecual
 4. `transactions` — status koleksi, wishlist, terjual, dan harga.
 5. `game_reviews` — rating, status tamat, dan catatan.
 
-`sql/seed.sql` menambahkan contoh Sony, Nintendo, Sega, konsol, game, transaksi, serta ulasan. Seed dapat dijalankan ulang tanpa menambahkan duplikat untuk baris contoh. Untuk database Supabase kosong, jalankan schema lalu seed melalui SQL Editor.
+`sql/seed.sql` menambahkan contoh Sony, Nintendo, Sega, konsol, game, transaksi, serta ulasan. Data game dan konsol demo memakai ilustrasi SVG lokal di `public/covers`, bukan URL layanan gambar pihak ketiga. Seed dapat dijalankan ulang tanpa menambahkan duplikat dan akan mengisi ulang URL cover demo. Jika seed lama sudah dijalankan, jalankan kembali `sql/seed.sql` setelah deploy versi repository yang menyertakan folder covers agar gambar tampil di website.
 
 ## Halaman aplikasi
 
@@ -76,7 +76,7 @@ Navigasi kapsul menyesuaikan desktop dan mobile. Di desktop, navigasi berada di 
 
 ## REST API
 
-Route Handlers Next.js menyediakan API berikut. Endpoint create/update game dan konsol menerima `multipart/form-data` untuk file gambar.
+Route Handlers Next.js menyediakan API berikut. Endpoint create game serta create/update game dan konsol menerima `multipart/form-data` untuk file gambar.
 
 | Method | Endpoint | Fungsi |
 |---|---|---|
