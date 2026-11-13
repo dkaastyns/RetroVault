@@ -1,0 +1,10 @@
+.game-card{position:relative}
+.game-card>a{display:block}
+.favorite-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;border:1px solid #ffffff22;border-radius:999px;background:#151513;color:#c7c4ba;font-size:12px;cursor:pointer;transition:color .18s,background .18s,transform .18s,border-color .18s}
+.favorite-button:hover{transform:scale(1.04);border-color:#e99a9a;color:#ffd0d0}
+.favorite-button.is-favorite{color:#ed9696;border-color:#ed969655;background:#351e22}
+.favorite-button.compact{position:absolute;top:11px;left:11px;width:37px;height:37px;padding:0;background:#151513d9;backdrop-filter:blur(8px);z-index:2}
+.favorite-button.compact.is-favorite{background:#421f25e8}
+.detail-copy>.favorite-button{margin:4px 0 9px}
+.game-card>a .cover{border-radius:11px 11px 0 0}
+@media(max-width:760px){.nav-link{padding-inline:5px}.favorite-button.compact{width:34px;height:34px}}

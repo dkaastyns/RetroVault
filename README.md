@@ -61,12 +61,15 @@ Jangan commit `.env.local` atau kredensial rahasia. File tersebut sudah dikecual
 4. `transactions` — status koleksi, wishlist, terjual, dan harga.
 5. `game_reviews` — rating, status tamat, dan catatan.
 
+Kolom `games.is_favorite` menyimpan favorit per game. Jika project Supabase sudah memiliki tabel sebelumnya, jalankan ulang `sql/schema.sql`; perintah `ADD COLUMN IF NOT EXISTS` menambahkan kolom tanpa mengubah data lain.
+
 `sql/seed.sql` menambahkan contoh Sony, Nintendo, Sega, konsol, game, transaksi, serta ulasan. Data game dan konsol demo memakai ilustrasi SVG lokal di `public/covers`, bukan URL layanan gambar pihak ketiga. Seed dapat dijalankan ulang tanpa menambahkan duplikat dan akan mengisi ulang URL cover demo. Jika seed lama sudah dijalankan, jalankan kembali `sql/seed.sql` setelah deploy versi repository yang menyertakan folder covers agar gambar tampil di website.
 
 ## Halaman aplikasi
 
 - `/` — dashboard jumlah game, konsol, nilai aset, dan wishlist.
 - `/games` — katalog dan form tambah game dengan unggah gambar.
+- `/wishlist` — game yang ditandai favorit; tombol hati pada kartu dan detail game bisa menambah atau menghapus favorit.
 - `/games/[id]` — detail game, transaksi, dan ulasan.
 - `/consoles` — katalog konsol beserta pabrikan.
 - `/consoles/[id]` — detail konsol dan game terkait.
@@ -86,6 +89,7 @@ Route Handlers Next.js menyediakan API berikut. Endpoint create game serta creat
 | `GET`, `PUT`, `DELETE` | `/api/consoles/:id` | Detail konsol beserta game, ubah, hapus |
 | `GET`, `POST` | `/api/games` | Daftar dan tambah game |
 | `GET`, `PUT`, `DELETE` | `/api/games/:id` | Detail game beserta transaksi/ulasan, ubah, hapus |
+| `PATCH` | `/api/games/:id/favorite` | Mengatur favorit dengan JSON `{ "is_favorite": true }` atau `false` |
 | `GET`, `POST` | `/api/games/:id/transactions` | Daftar dan tambah transaksi |
 | `PUT`, `DELETE` | `/api/games/:id/transactions/:transactionId` | Ubah dan hapus transaksi |
 | `GET`, `POST` | `/api/games/:id/reviews` | Daftar dan tambah ulasan |

@@ -3,9 +3,10 @@ import { db } from '@/lib/db';
 import { uploadImage } from '@/lib/cloudinary';
 import { errorResponse } from '@/lib/http';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const { rows } = await db.query(`SELECT g.*, c.name AS console_name FROM games g JOIN consoles c ON c.id=g.console_id ORDER BY g.created_at DESC`);
+    const favoritesOnly = request.nextUrl.searchParams.get('favorites') === 'true';
+    const { rows } = await db.query(`SELECT g.*, c.name AS console_name FROM games g JOIN consoles c ON c.id=g.console_id ${favoritesOnly ? 'WHERE g.is_favorite = TRUE' : ''} ORDER BY g.created_at DESC`);
     return NextResponse.json(rows);
   } catch (e) { return errorResponse(e); }
 }

@@ -2,6 +2,8 @@
 -- Run schema.sql first. This seed is safe to run more than once.
 BEGIN;
 
+ALTER TABLE games ADD COLUMN IF NOT EXISTS is_favorite BOOLEAN NOT NULL DEFAULT FALSE;
+
 INSERT INTO manufacturers (name, country, founded_year) VALUES
   ('Sony', 'Jepang', 1946),
   ('Nintendo', 'Jepang', 1889),
