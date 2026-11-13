@@ -1,0 +1,8 @@
+'use client';
+import {useEffect,useState} from 'react';
+import Link from 'next/link';
+import {useParams} from 'next/navigation';
+import {ArrowLeft,Gamepad2} from 'lucide-react';
+import type {Game} from '@/lib/types';
+type ConsoleDetail={name:string;manufacturer_name:string;release_year:number;image_url:string|null;games:Game[]};
+export default function ConsoleDetailPage(){const {id}=useParams<{id:string}>();const [item,setItem]=useState<ConsoleDetail|null>(null);useEffect(()=>{fetch(`/api/consoles/${id}`).then(async r=>{if(r.ok)setItem(await r.json())}).catch(()=>{});},[id]);if(!item)return <div className="empty-state">Memuat detail konsol…</div>;return <><Link className="back-link" href="/consoles"><ArrowLeft size={16}/> Kembali ke konsol</Link><section className="console-detail-head"><div className="console-detail-art">{item.image_url?<img src={item.image_url} alt={item.name}/>:<Gamepad2 size={56}/>}</div><div><p className="eyebrow">{item.manufacturer_name}</p><h1>{item.name}</h1><p className="muted">Dirilis {item.release_year||'—'} · {item.games.length} game terarsip</p></div></section><div className="section-title"><div><p className="eyebrow">LIBRARY</p><h2>Game untuk konsol ini</h2></div></div><div className="game-grid">{item.games.map(game=><Link className="game-card" href={`/games/${game.id}`} key={game.id}><div className="cover">{game.image_url?<img src={game.image_url} alt={game.title}/>:<Gamepad2 size={34}/>}</div><div className="card-copy"><span className="eyebrow">{game.release_year||'Klasik'}</span><h2>{game.title}</h2><p className="muted">{game.genre}</p></div></Link>)}{item.games.length===0&&<div className="empty-state">Belum ada game untuk konsol ini.</div>}</div></>}

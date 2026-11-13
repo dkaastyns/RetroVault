@@ -1,0 +1,8 @@
+'use client';
+import { FormEvent, useState } from 'react';
+import type { Console } from '@/lib/types';
+export function GameForm({consoles,onCreated}:{consoles:Console[];onCreated?:(game:unknown)=>void}){
+ const [busy,setBusy]=useState(false);const [message,setMessage]=useState('');
+ async function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();const formElement=e.currentTarget;setBusy(true);setMessage('');const form=new FormData(formElement);try{const res=await fetch('/api/games',{method:'POST',body:form});const data=await res.json();if(!res.ok)throw new Error(data.error||'Gagal menyimpan');onCreated?.(data);formElement.reset();setMessage('Game berhasil ditambahkan.');}catch(error){setMessage(error instanceof Error?error.message:'Terjadi kesalahan.');}finally{setBusy(false)}}
+ return <form className="game-form" onSubmit={submit} encType="multipart/form-data"><h2>Tambah game</h2><label>Judul<input name="title" required placeholder="Contoh: Shadow of the Colossus"/></label><div className="form-row"><label>Konsol<select name="console_id" required defaultValue=""><option value="" disabled>Pilih konsol</option>{consoles.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></label><label>Genre<input name="genre" required placeholder="Action adventure"/></label></div><div className="form-row"><label>Tahun rilis<input name="release_year" type="number" min="1970" max="2100"/></label><label>Foto<input name="image" type="file" accept="image/*"/></label></div><label>Deskripsi<textarea name="description" rows={3}/></label><button disabled={busy} className="button-primary">{busy?'Menyimpan…':'Simpan game'}</button>{message&&<p className="form-message">{message}</p>}</form>
+}
