@@ -1,2 +1,2 @@
 import { NextResponse } from 'next/server';
-export async function GET(){return NextResponse.json({name:'RetroVault',short_name:'RetroVault',description:'Arsip koleksi game klasik',start_url:'/',display:'standalone',background_color:'#0b0b12',theme_color:'#0b0b12',icons:[]});}
+export async function GET(){return NextResponse.json({id:'/',name:'RetroVault — Arsip Game Klasik',short_name:'RetroVault',description:'Arsip koleksi game klasik',start_url:'/',scope:'/',display:'standalone',orientation:'portrait-primary',background_color:'#0b0b12',theme_color:'#0b0b12',icons:[{src:'/icons/retrovault-192.svg',sizes:'192x192',type:'image/svg+xml',purpose:'any'},{src:'/icons/retrovault-512.svg',sizes:'512x512',type:'image/svg+xml',purpose:'any'}]});}
