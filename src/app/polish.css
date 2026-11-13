@@ -1,0 +1,28 @@
+/* Responsive editorial treatment and small interaction feedback. */
+.shell{padding-bottom:132px}
+.topbar{position:relative;z-index:5;background:#0b0b12cc;backdrop-filter:blur(14px)}
+.hero{background:linear-gradient(115deg,#17151f 0%,#12121a 58%,#1b1722 100%);border-radius:18px;box-shadow:inset 0 1px #ffffff0a}
+.hero h1,.page-heading h1,.detail-copy h1,.profile-page h1{font-family:Georgia,'Times New Roman',serif;font-weight:500;letter-spacing:-.045em}
+.hero h1 span{font-style:italic;color:#c7ee82}
+.eyebrow{color:#c1d88a}
+.button-primary{border-radius:999px;background:#c7ee82;transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
+.button-primary:hover{transform:translateY(-2px);background:#d5f49d;box-shadow:0 6px 22px #c7ee8225}
+.button-primary:active{transform:translateY(0) scale(.98)}
+.game-card,.console-card,.stat-card,.feature-panel,.quote-panel{border-radius:11px;transition:transform .22s ease,border-color .22s ease,background .22s ease}
+.game-card:hover,.console-card:hover{transform:translateY(-4px);border-color:#b4c88b;background:#171720}
+.cover,.console-art{background-color:#17171d}
+.bottom-nav{position:fixed;z-index:30;left:50%;bottom:22px;transform:translateX(-50%);display:flex;align-items:center;gap:5px;width:max-content;max-width:calc(100vw - 36px);height:62px;padding:7px;background:#17171deb;border:1px solid #ffffff20;border-radius:999px;box-shadow:0 12px 48px #0009,0 1px #ffffff0c inset;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.nav-link{position:relative;min-width:92px;height:46px;padding:0 15px;display:flex;align-items:center;justify-content:center;gap:9px;border-radius:999px;color:#aaa8ae;font:11px Arial,Helvetica,sans-serif;letter-spacing:.015em;transition:color .2s ease,background .2s ease,transform .2s ease}
+.nav-link:hover{color:#f6f3eb;background:#ffffff0a}
+.nav-link.active{color:#14170e;background:#c7ee82;font-weight:700;box-shadow:0 2px 12px #c7ee8222}
+.nav-link.active svg{filter:none}
+.nav-link svg{transition:transform .2s ease}
+.nav-link:hover svg{transform:translateY(-1px)}
+.game-form{border-radius:12px}
+@keyframes rise-in{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+.hero,.stat-card,.game-card,.console-card,.profile-card,.detail-layout,.console-detail-head{animation:rise-in .45s both}
+.game-card:nth-child(2),.console-card:nth-child(2){animation-delay:35ms}.game-card:nth-child(3),.console-card:nth-child(3){animation-delay:70ms}.game-card:nth-child(4),.console-card:nth-child(4){animation-delay:105ms}
+@media(min-width:1100px){.shell{padding-top:54px}.hero{min-height:380px;padding:58px}.game-grid,.console-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:19px}.cover{height:205px}.console-art{height:160px}}
+@media(max-width:760px){.shell{padding:27px 17px calc(112px + env(safe-area-inset-bottom))}.bottom-nav{bottom:calc(10px + env(safe-area-inset-bottom));width:calc(100vw - 24px);max-width:440px;height:64px;justify-content:space-around;padding:6px;gap:2px}.nav-link{min-width:0;flex:1;padding:0 8px;gap:6px;font-size:10px}.nav-link svg{width:17px;height:17px}.hero{border-radius:14px}.page-heading{align-items:center}.game-grid,.console-grid{gap:12px}.cover{height:clamp(125px,39vw,175px)}}
+@media(max-width:380px){.nav-link{flex-direction:column;gap:3px;font-size:9px}.bottom-nav{height:66px}.page-heading>.button-primary{white-space:nowrap}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}

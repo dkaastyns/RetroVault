@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import './polish.css';
 import { BottomNav } from '@/components/BottomNav';
 import { ServiceWorker } from '@/components/ServiceWorker';
 export const metadata:Metadata={title:'RetroVault — Arsip game klasik',description:'Katalog dan pengelola koleksi game konsol klasik.',manifest:'/manifest.json',applicationName:'RetroVault'};
