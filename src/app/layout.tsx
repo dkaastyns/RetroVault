@@ -3,6 +3,7 @@ import './globals.css';
 import './polish.css';
 import './pwa.css';
 import './favorites.css';
+import './loading-review.css';
 import { BottomNav } from '@/components/BottomNav';
 import { ServiceWorker } from '@/components/ServiceWorker';
 import { PwaExperience } from '@/components/PwaExperience';

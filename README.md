@@ -70,7 +70,7 @@ Kolom `games.is_favorite` menyimpan favorit per game. Jika project Supabase suda
 - `/` — dashboard jumlah game, konsol, nilai aset, dan wishlist.
 - `/games` — katalog dan form tambah game dengan unggah gambar.
 - `/wishlist` — game yang ditandai favorit; tombol hati pada kartu dan detail game bisa menambah atau menghapus favorit.
-- `/games/[id]` — detail game, transaksi, dan ulasan.
+- `/games/[id]` — detail game, transaksi, ulasan pemain, dan form untuk mengirim rating/catatan serta status tamat.
 - `/consoles` — katalog konsol beserta pabrikan.
 - `/consoles/[id]` — detail konsol dan game terkait.
 - `/profile` — profil pembuat proyek.

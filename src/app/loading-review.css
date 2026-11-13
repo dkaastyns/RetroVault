@@ -1,0 +1,16 @@
+.loading-state{grid-column:1/-1;min-height:180px;display:flex;align-items:center;justify-content:center;gap:11px;color:#c4c1b8;font-size:13px}
+.loading-spinner{width:17px;height:17px;border:2px solid #ffffff24;border-top-color:#c7ee82;border-radius:50%;animation:load-spin .7s linear infinite}
+@keyframes load-spin{to{transform:rotate(360deg)}}
+.review-form{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:12px;background:#12121b}
+.review-form h3{margin:0 0 15px;font:500 18px Georgia,serif}
+.review-rating{display:flex;flex-direction:column;gap:7px;font-size:11px;color:#aaa7b6}
+.review-rating span{display:flex;gap:3px}
+.review-rating button{padding:2px;border:0;background:transparent;color:#c7ee82;cursor:pointer;transition:transform .15s}
+.review-rating button:hover{transform:scale(1.18)}
+.review-text-label{display:grid;gap:7px;margin-top:13px;font-size:11px;color:#aaa7b6}
+.review-form textarea{resize:vertical;min-height:76px;padding:10px;border:1px solid #363442;border-radius:8px;background:#0b0b12;color:#f6f3fb;font:13px Arial,Helvetica,sans-serif}
+.review-form textarea:focus{outline:1px solid #c7ee82}
+.review-check{display:flex;align-items:center;gap:8px;margin:12px 0;color:#c2bfc6;font-size:11px}
+.review-check input{accent-color:#c7ee82}
+.review-form .button-primary{margin-top:5px}
+.review-count{display:inline-grid;place-items:center;min-width:23px;height:23px;border-radius:50%;background:#ffffff10;color:#c7ee82;font:11px Arial,sans-serif;vertical-align:middle}
