@@ -1,4 +1,4 @@
-import { ArrowUpRight, Gamepad2, Radio } from 'lucide-react';
+import { ArrowUpRight, Gamepad2, Github, Radio } from 'lucide-react';
 import { ProfilePortrait } from '@/components/ProfilePortrait';
 
 export default function ProfilePage() {
@@ -28,7 +28,7 @@ export default function ProfilePage() {
       <h2>Arsip kecil untuk<br/><em>kenangan besar.</em></h2>
       <p>RetroVault menggabungkan katalog koleksi, riwayat aset, dan ulasan dalam satu aplikasi web yang bisa dipasang di perangkat.</p>
       <div className="project-meta"><span><Radio size={15}/> Praktikum Pemrograman Perangkat Bergerak</span><span>SUPABASE · CLOUDINARY · NEXT.JS</span></div>
-      <a href="/games" className="profile-cta">Jelajahi koleksi <ArrowUpRight size={16}/></a>
+      <div className="project-actions"><a href="/games" className="profile-cta">Jelajahi koleksi <ArrowUpRight size={16}/></a><a href="https://github.com/dkaastyns/RetroVault" className="profile-cta profile-github" target="_blank" rel="noreferrer">Lihat di GitHub <Github size={15}/></a></div>
     </section>
     <footer className="profile-footer"><span>RETROVAULT</span><span>Dibuat dengan rasa ingin tahu dan nostalgia.</span><span>© 2026</span></footer>
   </div>;
