@@ -25,6 +25,24 @@
 .nav-link:hover svg{transform:translateY(-1px)}
 .game-form{border-radius:12px}
 .roulette-panel{margin-top:16px;padding:20px 22px;border:1px solid #b66cff38;border-radius:14px;background:radial-gradient(ellipse at 100% 0,#b66cff12,transparent 55%),linear-gradient(120deg,#171520,#12121b);box-shadow:inset 0 1px #ffffff0a}
+.highlights-section{margin:34px calc(-1 * min(24px, 2vw)) 42px;overflow:hidden}
+.highlights-heading{display:flex;align-items:center;justify-content:space-between;margin:0 24px 15px}
+.highlights-heading>div{display:flex;align-items:center;gap:10px}.highlights-heading .eyebrow{margin:0}
+.highlights-heading>a{display:inline-flex;align-items:center;gap:5px;color:#d7e9b3;font-size:11px;transition:gap .2s,color .2s}.highlights-heading>a:hover{gap:9px;color:#c7ee82}
+.highlights-tag{padding:5px 9px;border:1px solid #b66cff32;border-radius:999px;background:#b66cff10;color:#c985ff;font:700 9px monospace;letter-spacing:.09em}
+.highlights-window{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.highlights-track{display:flex;width:max-content;animation:highlights-scroll 42s linear infinite;will-change:transform}
+.highlights-window:hover .highlights-track,.highlights-window:focus-within .highlights-track{animation-play-state:paused}
+.highlights-group{display:flex;flex:none;gap:16px;padding-right:16px}
+.highlight-card{position:relative;isolation:isolate;display:block;flex:none;width:clamp(230px,29vw,340px);height:190px;overflow:hidden;border:1px solid #ffffff20;border-radius:14px;background:#15131c;box-shadow:0 10px 28px #0004;transform:translateZ(0)}
+.highlight-card img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1),filter .4s ease}
+.highlight-card:hover img,.highlight-card:focus-visible img{transform:scale(1.055);filter:saturate(1.1)}
+.highlight-shade{position:absolute;inset:0;background:linear-gradient(180deg,#09091005 22%,#09091030 54%,#090910e8 100%);pointer-events:none}
+.highlight-copy{position:absolute;inset:auto 15px 14px;display:grid;gap:5px;text-shadow:0 1px 9px #000b}
+.highlight-copy small{color:#d1ed9a;font:700 9px monospace;letter-spacing:.12em;text-transform:uppercase}
+.highlight-copy strong{overflow:hidden;color:#fff;font-size:16px;text-overflow:ellipsis;white-space:nowrap}
+.highlight-copy em{color:#d3cfdb;font-size:10px;font-style:normal}
+@keyframes highlights-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .roulette-heading{display:flex;align-items:center;justify-content:space-between;gap:14px}
 .roulette-heading h3{margin:6px 0 0;font-size:17px;letter-spacing:-.025em}
 .roulette-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border:1px solid #c7ee8266;border-radius:999px;background:#c7ee82;color:#11140b;font-size:12px;font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
@@ -52,5 +70,7 @@
 @media(hover:hover) and (pointer:fine){.nav-link:hover{color:#f6f3eb;background:#ffffff0a}.nav-link.active:hover{color:#10140a;background:#d5f49d}}
 @media(hover:none),(pointer:coarse){.nav-link:hover{color:inherit;background:transparent}.nav-link.active:hover{color:#10140a;background:#c7ee82}}
 @media(max-width:480px){.roulette-panel{padding:16px}.roulette-heading{align-items:flex-start;flex-direction:column}.roulette-button{width:100%}}
+@media(max-width:760px){.highlights-section{margin:26px -17px 34px}.highlights-heading{margin-inline:17px}.highlights-group{gap:12px;padding-right:12px}.highlight-card{width:clamp(220px,72vw,290px);height:164px}.highlights-track{animation-duration:34s}}
+@media(prefers-reduced-motion:reduce){.highlights-window{overflow-x:auto;mask-image:none;-webkit-mask-image:none}.highlights-track{width:auto;animation:none;will-change:auto}.highlights-group[aria-hidden="true"]{display:none}}
 @media(prefers-reduced-motion:reduce){.game-card{will-change:auto}.roulette-result{animation:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
