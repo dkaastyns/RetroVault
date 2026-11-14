@@ -1,0 +1,21 @@
+/* Shared, restrained interaction feedback across every route. */
+:where(button, a, input, textarea, select):focus-visible{outline:2px solid #c7ee82;outline-offset:3px}
+:where(button, .button-primary, .favorite-button, .share-game-button, .pagination button){-webkit-tap-highlight-color:transparent}
+.button-primary,.favorite-button,.share-game-button,.roulette-button,.pagination button,.nav-link,.profile-cta,.feature-panel>a,.back-link{transition-timing-function:cubic-bezier(.2,.8,.2,1)}
+.button-primary:active,.favorite-button:active,.share-game-button:active,.roulette-button:active:not(:disabled),.pagination button:active:not(:disabled){transform:scale(.96)}
+.stat-card,.game-card,.console-card,.feature-panel,.quote-panel,.profile-identity,.profile-project,.review-card,.game-form,.review-form,.console-detail-head,.detail-cover{transition:transform .24s cubic-bezier(.2,.8,.2,1),border-color .24s ease,box-shadow .24s ease,background-color .24s ease}
+.stat-card:hover,.console-card:hover,.feature-panel:hover,.quote-panel:hover,.profile-identity:hover,.profile-project:hover,.review-card:hover,.game-form:hover,.review-form:hover,.console-detail-head:hover{border-color:#b66cff55;box-shadow:0 12px 34px #0002}
+.stat-card:hover,.console-card:hover,.feature-panel:hover,.quote-panel:hover,.review-card:hover{transform:translateY(-2px)}
+.detail-cover img,.profile-portrait img{transition:transform .55s cubic-bezier(.2,.8,.2,1),filter .4s ease}
+.detail-cover:hover img,.profile-portrait:hover img{transform:scale(1.025);filter:saturate(1.06)}
+.cover img{transition:transform .45s cubic-bezier(.2,.8,.2,1),filter .3s ease}
+.game-card:hover .cover img{transform:scale(1.045);filter:saturate(1.08)}
+.review-rating button:active{transform:scale(.88)}
+.game-form input,.game-form textarea,.game-form select,.review-form textarea{transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease}
+.game-form input:focus,.game-form textarea:focus,.game-form select:focus,.review-form textarea:focus{box-shadow:0 0 0 3px #c7ee8217;background-color:#101018}
+.loading-spinner{will-change:transform}
+@media(hover:none),(pointer:coarse){.stat-card:hover,.console-card:hover,.feature-panel:hover,.quote-panel:hover,.profile-identity:hover,.profile-project:hover,.review-card:hover,.game-form:hover,.review-form:hover,.console-detail-head:hover{transform:none;box-shadow:none}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .game-card,.stat-card,.console-card,.feature-panel,.quote-panel,.review-card{will-change:auto}
+}
