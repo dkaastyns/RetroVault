@@ -14,6 +14,7 @@
 .button-primary:active{transform:translateY(0) scale(.98)}
 .game-card,.console-card,.stat-card,.feature-panel,.quote-panel{border-radius:11px;transition:transform .22s ease,border-color .22s ease,background .22s ease}
 .game-card:hover,.console-card:hover{transform:translateY(-4px);border-color:#b4c88b;background:#171720}
+.game-card{transform-style:preserve-3d;will-change:transform}
 .cover,.console-art{background-color:#17171d}
 .bottom-nav{position:fixed;z-index:30;left:50%;bottom:22px;transform:translateX(-50%);display:flex;align-items:center;gap:5px;width:max-content;max-width:calc(100vw - 36px);height:62px;padding:7px;background:#17171deb;border:1px solid #ffffff20;border-radius:999px;box-shadow:0 12px 48px #0009,0 1px #ffffff0c inset;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
 .nav-link{position:relative;min-width:92px;height:46px;padding:0 15px;display:flex;align-items:center;justify-content:center;gap:9px;border-radius:999px;color:#aaa8ae;font:11px Arial,Helvetica,sans-serif;letter-spacing:.015em;transition:color .2s ease,background .2s ease,transform .2s ease}
@@ -23,7 +24,23 @@
 .nav-link svg{transition:transform .2s ease}
 .nav-link:hover svg{transform:translateY(-1px)}
 .game-form{border-radius:12px}
-@keyframes rise-in{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+.roulette-panel{margin-top:16px;padding:20px 22px;border:1px solid #b66cff38;border-radius:14px;background:radial-gradient(ellipse at 100% 0,#b66cff12,transparent 55%),linear-gradient(120deg,#171520,#12121b);box-shadow:inset 0 1px #ffffff0a}
+.roulette-heading{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.roulette-heading h3{margin:6px 0 0;font-size:17px;letter-spacing:-.025em}
+.roulette-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border:1px solid #c7ee8266;border-radius:999px;background:#c7ee82;color:#11140b;font-size:12px;font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
+.roulette-button:hover:not(:disabled){transform:translateY(-2px);background:#d5f49d;box-shadow:0 6px 22px #c7ee8225}
+.roulette-button:disabled{opacity:.7;cursor:wait}
+.roulette-result{display:flex;align-items:center;gap:12px;margin-top:16px;padding:13px 15px;border:1px solid #ffffff16;border-radius:10px;background:#ffffff06;animation:roulette-reveal .35s ease both}
+.roulette-result>span:nth-child(2){display:grid;gap:3px;flex:1;min-width:0}
+.roulette-result small{font:700 9px monospace;letter-spacing:.12em;color:#c1d88a}
+.roulette-result strong{font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.roulette-result em{font-style:normal;font-size:11px;color:var(--muted)}
+.roulette-result>svg{color:var(--violet)}
+.roulette-icon{width:38px;height:38px;display:grid;place-items:center;flex:none;border:1px solid #b66cff45;border-radius:10px;background:#b66cff12;color:#c985ff}
+.roulette-hint{margin:13px 0 0;font-size:12px;line-height:1.5;color:var(--muted)}
+@keyframes roulette-reveal{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@media(hover:hover) and (pointer:fine){.game-card:hover{transform:perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)) translateY(-4px)}}
+@keyframes rise-in{from{opacity:0;translate:0 9px}to{opacity:1;translate:0 0}}
 @keyframes console-float{0%,100%{translate:0 0}50%{translate:0 -9px}}
 @keyframes gamepad-glow{0%,100%{filter:drop-shadow(0 0 7px #c985ff20)}50%{filter:drop-shadow(0 0 18px #c985ff68)}}
 @keyframes orbit-breathe{0%,100%{opacity:.45;scale:.97}50%{opacity:1;scale:1.025}}
@@ -34,4 +51,6 @@
 @media(max-width:380px){.nav-link{flex-direction:column;gap:4px;font-size:9px}.bottom-nav{height:70px;gap:3px;padding:6px}.page-heading>.button-primary{white-space:nowrap}}
 @media(hover:hover) and (pointer:fine){.nav-link:hover{color:#f6f3eb;background:#ffffff0a}.nav-link.active:hover{color:#10140a;background:#d5f49d}}
 @media(hover:none),(pointer:coarse){.nav-link:hover{color:inherit;background:transparent}.nav-link.active:hover{color:#10140a;background:#c7ee82}}
+@media(max-width:480px){.roulette-panel{padding:16px}.roulette-heading{align-items:flex-start;flex-direction:column}.roulette-button{width:100%}}
+@media(prefers-reduced-motion:reduce){.game-card{will-change:auto}.roulette-result{animation:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
