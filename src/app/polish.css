@@ -4,6 +4,10 @@
 .hero{background:linear-gradient(115deg,#17151f 0%,#12121a 58%,#1b1722 100%);border-radius:18px;box-shadow:inset 0 1px #ffffff0a}
 .hero h1,.page-heading h1,.detail-copy h1,.profile-page h1{font-family:Georgia,'Times New Roman',serif;font-weight:500;letter-spacing:-.045em}
 .hero h1 span{font-style:italic;color:#c7ee82}
+.hero-console{animation:console-float 5s ease-in-out infinite}
+.hero-console svg{filter:drop-shadow(0 0 12px #c985ff38);animation:gamepad-glow 3.4s ease-in-out infinite}
+.hero-orbit.orbit-one{animation:orbit-breathe 4.5s ease-in-out infinite}
+.hero-orbit.orbit-two{animation:orbit-breathe 4.5s ease-in-out -2.25s infinite}
 .eyebrow{color:#c1d88a}
 .button-primary{border-radius:999px;background:#c7ee82;transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
 .button-primary:hover{transform:translateY(-2px);background:#d5f49d;box-shadow:0 6px 22px #c7ee8225}
@@ -20,6 +24,9 @@
 .nav-link:hover svg{transform:translateY(-1px)}
 .game-form{border-radius:12px}
 @keyframes rise-in{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes console-float{0%,100%{translate:0 0}50%{translate:0 -9px}}
+@keyframes gamepad-glow{0%,100%{filter:drop-shadow(0 0 7px #c985ff20)}50%{filter:drop-shadow(0 0 18px #c985ff68)}}
+@keyframes orbit-breathe{0%,100%{opacity:.45;scale:.97}50%{opacity:1;scale:1.025}}
 .hero,.stat-card,.game-card,.console-card,.profile-card,.detail-layout,.console-detail-head{animation:rise-in .45s both}
 .game-card:nth-child(2),.console-card:nth-child(2){animation-delay:35ms}.game-card:nth-child(3),.console-card:nth-child(3){animation-delay:70ms}.game-card:nth-child(4),.console-card:nth-child(4){animation-delay:105ms}
 @media(min-width:1100px){.shell{padding-top:54px}.hero{min-height:380px;padding:58px}.game-grid,.console-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:19px}.cover{height:205px}.console-art{height:160px}}
