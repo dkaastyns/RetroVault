@@ -8,6 +8,7 @@ import './profile.css';
 import './liquid-glass.css';
 import './pagination.css';
 import './micro-motion.css';
+import './game-edit.css';
 import { BottomNav } from '@/components/BottomNav';
 import { ServiceWorker } from '@/components/ServiceWorker';
 import { PwaExperience } from '@/components/PwaExperience';

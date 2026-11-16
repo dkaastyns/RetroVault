@@ -7,6 +7,7 @@ import { ArrowLeft, Star } from 'lucide-react';
 import { FavoriteButton } from '@/components/FavoriteButton';
 import { ReviewForm } from '@/components/ReviewForm';
 import { ShareGameButton } from '@/components/ShareGameButton';
+import { EditGameInfo } from '@/components/EditGameInfo';
 
 type Review = { id: number; game_id: number; rating: number; status_tamat: boolean; review_text: string };
 type Detail = {
@@ -44,6 +45,7 @@ export default function GameDetail() {
       <div className="detail-copy">
         <p className="eyebrow">{data.console_name} · {data.manufacturer_name}</p>
         <h1>{data.title}</h1>
+        <EditGameInfo gameId={data.id} description={data.description} onSaved={game => setData(current => current ? { ...current, ...game } : current)} />
         <ShareGameButton gameId={data.id} title={data.title}/>
         <FavoriteButton gameId={data.id} initialFavorite={data.is_favorite}/>
         <p className="muted">{data.genre} / {data.release_year || 'Tahun tidak diketahui'}</p>

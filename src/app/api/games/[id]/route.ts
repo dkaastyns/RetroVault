@@ -28,9 +28,9 @@ export async function PUT(request: NextRequest, { params }: Context) {
     }
     const { rows } = await db.query(
       `UPDATE games SET console_id=COALESCE($1,console_id), title=COALESCE($2,title), genre=COALESCE($3,genre),
-       release_year=COALESCE($4,release_year), description=COALESCE($5,description),
-       image_url=COALESCE($6,image_url), image_public_id=COALESCE($7,image_public_id) WHERE id=$8 RETURNING *`,
-      [form.get('console_id') || null, form.get('title') || null, form.get('genre') || null, form.get('release_year') || null, form.get('description') || null, imageUrl, publicId, params.id]
+       release_year=COALESCE($4,release_year), description=CASE WHEN $5 THEN $6 ELSE description END,
+       image_url=COALESCE($7,image_url), image_public_id=COALESCE($8,image_public_id) WHERE id=$9 RETURNING *`,
+      [form.get('console_id') || null, form.get('title') || null, form.get('genre') || null, form.get('release_year') || null, form.has('description'), form.has('description') ? (form.get('description') || null) : null, imageUrl, publicId, params.id]
     );
     if (publicId) await deleteImage(current.rows[0].image_public_id);
     return NextResponse.json(rows[0]);

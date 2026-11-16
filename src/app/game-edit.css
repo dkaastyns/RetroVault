@@ -1,0 +1,5 @@
+.button-secondary{display:inline-flex;align-items:center;justify-content:center;border:1px solid #ffffff2b;border-radius:8px;padding:9px 12px;background:#ffffff08;color:#e8e5ef;font-weight:700;font-size:11px;cursor:pointer}
+.button-secondary:hover{border-color:var(--violet);color:white}
+.game-edit{margin:14px 0}
+.game-edit-form{margin:12px 0 20px}
+.game-edit-form>.muted{font-size:11px;margin:0 0 13px}
