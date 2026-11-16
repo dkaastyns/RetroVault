@@ -1,0 +1,13 @@
+.asset-history{margin-top:8px}
+.asset-form{display:grid;gap:11px;margin:16px 0;padding:16px;background:#14141f;border:1px solid var(--line);border-radius:11px}
+.asset-form h3{margin:0;font-size:14px}
+.asset-form label{display:grid;gap:7px;color:#c6c2ce;font-size:11px}
+.asset-form input,.asset-form select{min-width:0;background:#0b0b12;border:1px solid #363442;border-radius:7px;padding:10px;color:white;outline:none}
+.asset-form input:focus,.asset-form select:focus{border-color:var(--violet)}
+.asset-fields-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.asset-form-actions,.asset-entry-actions{display:flex;gap:8px}
+.asset-entry{border-bottom:1px solid var(--line);padding:2px 0 8px}
+.asset-entry .list-row{border:0}
+.asset-entry-actions{justify-content:flex-end}
+.asset-entry-actions .button-secondary{padding:6px 9px;font-size:10px}
+@media(max-width:500px){.asset-fields-row{grid-template-columns:1fr}}

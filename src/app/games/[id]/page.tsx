@@ -8,12 +8,13 @@ import { FavoriteButton } from '@/components/FavoriteButton';
 import { ReviewForm } from '@/components/ReviewForm';
 import { ShareGameButton } from '@/components/ShareGameButton';
 import { EditGameInfo } from '@/components/EditGameInfo';
+import { AssetHistory, AssetTransaction } from '@/components/AssetHistory';
 
 type Review = { id: number; game_id: number; rating: number; status_tamat: boolean; review_text: string };
 type Detail = {
   id: number; title: string; genre: string; release_year: number | null; console_name: string;
   manufacturer_name: string; image_url: string | null; description: string | null; is_favorite: boolean;
-  transactions: { id: number; status: string; purchase_price: string; purchase_date: string | null }[];
+  transactions: AssetTransaction[];
   reviews: Review[];
 };
 
@@ -51,8 +52,7 @@ export default function GameDetail() {
         <p className="muted">{data.genre} / {data.release_year || 'Tahun tidak diketahui'}</p>
         <p>{data.description || 'Belum ada deskripsi untuk game ini.'}</p>
         <h2>Riwayat aset</h2>
-        {data.transactions.map(transaction => <div className="list-row" key={transaction.id}><span>{transaction.status}</span><strong>Rp {Number(transaction.purchase_price).toLocaleString('id-ID')}</strong><small>{transaction.purchase_date || '—'}</small></div>)}
-        {data.transactions.length === 0 && <p className="muted">Belum ada transaksi.</p>}
+        <AssetHistory gameId={data.id} transactions={data.transactions} onChange={transactions => setData(current => current ? { ...current, transactions } : current)} />
         <h2>Ulasan pemain <span className="review-count">{data.reviews.length}</span></h2>
         {data.reviews.map(review => <div className="review-card" key={review.id}><span className="stars">{Array.from({ length: review.rating }, (_, index) => <Star key={index} size={14} fill="currentColor"/>)}</span><p>{review.review_text || 'Tanpa catatan.'}</p><small>{review.status_tamat ? 'Sudah tamat' : 'Belum tamat'}</small></div>)}
         {data.reviews.length === 0 && <p className="muted">Belum ada ulasan. Jadilah yang pertama berbagi kesan.</p>}
