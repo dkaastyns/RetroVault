@@ -6,7 +6,7 @@ export type AssetTransaction = { id: number; game_id: number; status: 'Koleksi' 
 const statuses: AssetTransaction['status'][] = ['Koleksi', 'Wishlist', 'Terjual'];
 
 export function AssetHistory({ gameId, transactions, onChange }: { gameId: number; transactions: AssetTransaction[]; onChange: (items: AssetTransaction[]) => void }) {
-  const [editing, setEditing] = useState<number | null>(null);
+  const [modal, setModal] = useState<'add' | number | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -23,7 +23,7 @@ export function AssetHistory({ gameId, transactions, onChange }: { gameId: numbe
       const result = response.status === 204 ? null : await response.json();
       if (!response.ok) throw new Error(result?.error || 'Transaksi gagal disimpan.');
       onChange(transactionId ? transactions.map(item => item.id === transactionId ? result : item) : [result, ...transactions]);
-      setEditing(null); setMessage(transactionId ? 'Transaksi diperbarui.' : 'Transaksi ditambahkan.');
+      setModal(null); setMessage(transactionId ? 'Transaksi diperbarui.' : 'Transaksi ditambahkan.');
       if (!transactionId) formElement.reset();
     } catch (error) { setMessage(error instanceof Error ? error.message : 'Terjadi kesalahan.'); }
     finally { setBusy(false); }
@@ -54,12 +54,19 @@ export function AssetHistory({ gameId, transactions, onChange }: { gameId: numbe
   return <div className="asset-history">
     {transactions.length === 0 && <p className="muted">Belum ada transaksi.</p>}
     {transactions.map(item => <div className="asset-entry" key={item.id}>
-      {editing === item.id ? <form className="asset-form" onSubmit={event => submit(event, item.id)}>{fields(item)}</form> : <>
         <div className="list-row"><span>{item.status}</span><strong>Rp {Number(item.purchase_price).toLocaleString('id-ID')}</strong><small>{item.purchase_date ? new Date(`${item.purchase_date.slice(0,10)}T00:00:00`).toLocaleDateString('id-ID') : '—'}</small></div>
-        <div className="asset-entry-actions"><button type="button" className="button-secondary" onClick={() => setEditing(item.id)}>Edit</button><button type="button" className="button-secondary" disabled={busy} onClick={() => remove(item.id)}>Hapus</button></div>
-      </>}
+        <div className="asset-entry-actions"><button type="button" className="button-secondary" onClick={() => setModal(item.id)}>Edit</button><button type="button" className="button-secondary" disabled={busy} onClick={() => remove(item.id)}>Hapus</button></div>
     </div>)}
-    <form className="asset-form" onSubmit={event => submit(event)}><h3>Tambah riwayat aset</h3>{fields()}</form>
+    <button type="button" className="button-primary asset-add-button" onClick={() => setModal('add')}>Tambah riwayat aset</button>
+    {modal !== null && <div className="asset-modal-backdrop" onKeyDown={event => { if (event.key === 'Escape' && !busy) setModal(null); }} onMouseDown={event => { if (event.target === event.currentTarget && !busy) setModal(null); }}>
+      <section className="asset-modal" role="dialog" aria-modal="true" aria-labelledby="asset-modal-title">
+        <button type="button" className="asset-modal-close" aria-label="Tutup" disabled={busy} onClick={() => setModal(null)}>×</button>
+        <form key={modal} className="asset-form" onSubmit={event => submit(event, typeof modal === 'number' ? modal : undefined)}>
+          <h3 id="asset-modal-title">{typeof modal === 'number' ? 'Edit riwayat aset' : 'Tambah riwayat aset'}</h3>
+          {fields(typeof modal === 'number' ? transactions.find(item => item.id === modal) : undefined)}
+        </form>
+      </section>
+    </div>}
     {message && <p className="form-message" role="status">{message}</p>}
   </div>;
 }

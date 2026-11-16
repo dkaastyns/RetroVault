@@ -1,5 +1,5 @@
 .asset-history{margin-top:8px}
-.asset-form{display:grid;gap:11px;margin:16px 0;padding:16px;background:#14141f;border:1px solid var(--line);border-radius:11px}
+.asset-form{display:grid;gap:11px;margin:0;padding:0;border:0;background:transparent}
 .asset-form h3{margin:0;font-size:14px}
 .asset-form label{display:grid;gap:7px;color:#c6c2ce;font-size:11px}
 .asset-form input,.asset-form select{min-width:0;background:#0b0b12;border:1px solid #363442;border-radius:7px;padding:10px;color:white;outline:none}
@@ -10,4 +10,11 @@
 .asset-entry .list-row{border:0}
 .asset-entry-actions{justify-content:flex-end}
 .asset-entry-actions .button-secondary{padding:6px 9px;font-size:10px}
+.asset-add-button{margin-top:16px}
+.asset-modal-backdrop{position:fixed;z-index:30;inset:0;display:grid;place-items:center;padding:20px;background:#05050bd9;backdrop-filter:blur(8px)}
+.asset-modal{position:relative;width:min(100%,480px);padding:25px;background:#15141e;border:1px solid #ffffff22;border-radius:16px;box-shadow:0 24px 90px #0009}
+.asset-modal .asset-form{padding-top:6px}
+.asset-modal .asset-form h3{font-size:18px;margin-bottom:4px}
+.asset-modal-close{position:absolute;top:12px;right:14px;width:32px;height:32px;border:0;border-radius:8px;background:#ffffff0d;color:#d8d5df;font-size:23px;cursor:pointer}
+.asset-modal-close:hover{background:#ffffff1a;color:white}
 @media(max-width:500px){.asset-fields-row{grid-template-columns:1fr}}
