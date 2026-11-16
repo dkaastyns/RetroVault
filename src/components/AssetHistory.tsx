@@ -7,6 +7,7 @@ const statuses: AssetTransaction['status'][] = ['Koleksi', 'Wishlist', 'Terjual'
 
 export function AssetHistory({ gameId, transactions, onChange }: { gameId: number; transactions: AssetTransaction[]; onChange: (items: AssetTransaction[]) => void }) {
   const [modal, setModal] = useState<'add' | number | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -30,12 +31,11 @@ export function AssetHistory({ gameId, transactions, onChange }: { gameId: numbe
   }
 
   async function remove(transactionId: number) {
-    if (!window.confirm('Hapus catatan transaksi ini?')) return;
     setBusy(true); setMessage('');
     try {
       const response = await fetch(`/api/games/${gameId}/transactions/${transactionId}`, { method: 'DELETE' });
       if (!response.ok) { const result = await response.json(); throw new Error(result.error || 'Transaksi gagal dihapus.'); }
-      onChange(transactions.filter(item => item.id !== transactionId)); setMessage('Transaksi dihapus.');
+      onChange(transactions.filter(item => item.id !== transactionId)); setDeleteTarget(null); setMessage('Transaksi dihapus.');
     } catch (error) { setMessage(error instanceof Error ? error.message : 'Terjadi kesalahan.'); }
     finally { setBusy(false); }
   }
@@ -55,7 +55,7 @@ export function AssetHistory({ gameId, transactions, onChange }: { gameId: numbe
     {transactions.length === 0 && <p className="muted">Belum ada transaksi.</p>}
     {transactions.map(item => <div className="asset-entry" key={item.id}>
         <div className="list-row"><span>{item.status}</span><strong>Rp {Number(item.purchase_price).toLocaleString('id-ID')}</strong><small>{item.purchase_date ? new Date(`${item.purchase_date.slice(0,10)}T00:00:00`).toLocaleDateString('id-ID') : '—'}</small></div>
-        <div className="asset-entry-actions"><button type="button" className="button-secondary" onClick={() => setModal(item.id)}>Edit</button><button type="button" className="button-secondary" disabled={busy} onClick={() => remove(item.id)}>Hapus</button></div>
+        <div className="asset-entry-actions"><button type="button" className="button-secondary" onClick={() => setModal(item.id)}>Edit</button><button type="button" className="button-secondary" disabled={busy} onClick={() => setDeleteTarget(item.id)}>Hapus</button></div>
     </div>)}
     <button type="button" className="button-primary asset-add-button" onClick={() => setModal('add')}>Tambah riwayat aset</button>
     {modal !== null && <div className="asset-modal-backdrop" onKeyDown={event => { if (event.key === 'Escape' && !busy) setModal(null); }} onMouseDown={event => { if (event.target === event.currentTarget && !busy) setModal(null); }}>
@@ -65,6 +65,14 @@ export function AssetHistory({ gameId, transactions, onChange }: { gameId: numbe
           <h3 id="asset-modal-title">{typeof modal === 'number' ? 'Edit riwayat aset' : 'Tambah riwayat aset'}</h3>
           {fields(typeof modal === 'number' ? transactions.find(item => item.id === modal) : undefined)}
         </form>
+      </section>
+    </div>}
+    {deleteTarget !== null && <div className="asset-modal-backdrop" onKeyDown={event => { if (event.key === 'Escape' && !busy) setDeleteTarget(null); }} onMouseDown={event => { if (event.target === event.currentTarget && !busy) setDeleteTarget(null); }}>
+      <section className="asset-modal delete-confirm-modal" role="alertdialog" aria-modal="true" aria-labelledby="delete-transaction-title" aria-describedby="delete-transaction-description">
+        <span className="delete-confirm-icon" aria-hidden="true">!</span>
+        <h3 id="delete-transaction-title">Hapus riwayat aset?</h3>
+        <p id="delete-transaction-description">Catatan transaksi ini akan dihapus dari game dan tidak bisa dipulihkan.</p>
+        <div className="delete-confirm-actions"><button type="button" className="button-secondary" disabled={busy} onClick={() => setDeleteTarget(null)}>Batal</button><button type="button" className="button-danger" disabled={busy} onClick={() => remove(deleteTarget)}>{busy ? 'Menghapus…' : 'Ya, hapus'}</button></div>
       </section>
     </div>}
     {message && <p className="form-message" role="status">{message}</p>}

@@ -14,6 +14,23 @@
 .game-form input,.game-form textarea,.game-form select,.review-form textarea{transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease}
 .game-form input:focus,.game-form textarea:focus,.game-form select:focus,.review-form textarea:focus{box-shadow:0 0 0 3px #c7ee8217;background-color:#101018}
 .loading-spinner{will-change:transform}
+@keyframes content-arrive{from{opacity:0;transform:translateY(12px) scale(.992)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes dialog-arrive{from{opacity:0;transform:translateY(10px) scale(.975);filter:blur(4px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+.page-heading,.hero,.console-detail-head,.profile-page,.detail-layout{animation:content-arrive .48s cubic-bezier(.2,.8,.2,1) both}
+.game-grid>.game-card,.console-grid>.console-card,.stats-grid>.stat-card,.dashboard-lower>*{animation:content-arrive .42s cubic-bezier(.2,.8,.2,1) both}
+.game-grid>.game-card:nth-child(2),.console-grid>.console-card:nth-child(2),.stats-grid>.stat-card:nth-child(2){animation-delay:35ms}
+.game-grid>.game-card:nth-child(3),.console-grid>.console-card:nth-child(3),.stats-grid>.stat-card:nth-child(3){animation-delay:70ms}
+.game-grid>.game-card:nth-child(4),.console-grid>.console-card:nth-child(4){animation-delay:105ms}
+.game-grid>.game-card:nth-child(5),.console-grid>.console-card:nth-child(5){animation-delay:140ms}
+.game-grid>.game-card:nth-child(6),.console-grid>.console-card:nth-child(6){animation-delay:175ms}
+.game-grid>.game-card:nth-child(7),.console-grid>.console-card:nth-child(7){animation-delay:210ms}
+.game-grid>.game-card:nth-child(8),.console-grid>.console-card:nth-child(8){animation-delay:245ms}
+.button-primary,.button-secondary,.favorite-button,.share-game-button,.pagination button,.nav-link,.back-link{transition:transform .22s cubic-bezier(.2,.8,.2,1),color .22s ease,background-color .22s ease,border-color .22s ease,box-shadow .22s ease,filter .22s ease}
+.button-primary:hover:not(:disabled),.button-secondary:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 7px 22px #0003}
+.bottom-nav .nav-link svg{transition:transform .28s cubic-bezier(.2,.8,.2,1),filter .28s ease}
+.bottom-nav .nav-link:hover svg,.bottom-nav .nav-link[aria-current="page"] svg{transform:translateY(-1px) scale(1.06)}
+.asset-modal-backdrop{animation:backdrop-arrive .2s ease both}
+@keyframes backdrop-arrive{from{opacity:0}to{opacity:1}}
 @media(hover:none),(pointer:coarse){.stat-card:hover,.console-card:hover,.feature-panel:hover,.quote-panel:hover,.profile-identity:hover,.profile-project:hover,.review-card:hover,.game-form:hover,.review-form:hover,.console-detail-head:hover{transform:none;box-shadow:none}}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
