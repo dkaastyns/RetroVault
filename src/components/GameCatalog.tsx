@@ -74,10 +74,15 @@ export function GameCatalog({ favoritesOnly = false }: { favoritesOnly?: boolean
         <h1>{favoritesOnly ? 'Wishlist' : 'Katalog Game'}</h1>
         <p className="muted">{favoritesOnly ? 'Game yang kamu tandai untuk dimainkan atau dikoleksi.' : 'Koleksi klasik yang tersimpan di satu tempat.'}</p>
       </div>
-      {!favoritesOnly && <button className="button-primary" onClick={() => setShowForm(!showForm)}><Plus size={16}/>{showForm ? 'Tutup' : 'Tambah game'}</button>}
+      {!favoritesOnly && <button className="button-primary" onClick={() => setShowForm(true)}><Plus size={16}/>Tambah game</button>}
     </div>
 
-    {showForm && <GameForm consoles={consoles} onCreated={game => { setGames(previous => [game as Game, ...previous]); setPage(1); }}/>}
+    {showForm && <div className="asset-modal-backdrop" onKeyDown={event => { if (event.key === 'Escape') setShowForm(false); }} onMouseDown={event => { if (event.target === event.currentTarget) setShowForm(false); }}>
+      <section className="asset-modal" role="dialog" aria-modal="true" aria-label="Tambah game">
+        <button type="button" className="asset-modal-close" aria-label="Tutup" onClick={() => setShowForm(false)}>×</button>
+        <GameForm consoles={consoles} onCreated={game => { setGames(previous => [game as Game, ...previous]); setPage(1); setShowForm(false); }}/>
+      </section>
+    </div>}
 
     {!favoritesOnly && <section className="catalog-filters" aria-label="Cari dan filter game">
       <label className="catalog-search"><Search size={17}/><span className="sr-only">Cari game</span><input type="search" value={search} onChange={event => setSearch(event.target.value)} placeholder="Cari judul, genre, atau konsol…"/></label>

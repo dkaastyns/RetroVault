@@ -3,3 +3,5 @@
 .game-edit{margin:14px 0}
 .game-edit-form{margin:12px 0 20px}
 .game-edit-form>.muted{font-size:11px;margin:0 0 13px}
+.asset-modal .game-form{width:100%;max-width:none;max-height:calc(100dvh - 90px);overflow-y:auto;margin:0;padding:0 5px 4px 0;border:0;background:transparent}
+.asset-modal .game-form h2{font-size:20px}
