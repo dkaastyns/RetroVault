@@ -47,7 +47,7 @@ export function AssetHistory({ gameId, transactions, onChange }: { gameId: numbe
         <label>Harga (Rp)<input name="purchase_price" type="number" min="0" step="0.01" defaultValue={item?.purchase_price || '0'} /></label>
         <label>Tanggal<input name="purchase_date" type="date" defaultValue={item?.purchase_date?.slice(0, 10) || ''} /></label>
       </div>
-      <div className="asset-form-actions"><button className="button-primary" disabled={busy}>{busy ? 'Menyimpan…' : item ? 'Simpan edit' : 'Tambah catatan'}</button>{item && <button type="button" className="button-secondary" onClick={() => setEditing(null)}>Batal</button>}</div>
+      <div className="asset-form-actions"><button className="button-primary" disabled={busy}>{busy ? 'Menyimpan…' : item ? 'Simpan edit' : 'Tambah catatan'}</button>{item && <button type="button" className="button-secondary" onClick={() => setModal(null)}>Batal</button>}</div>
     </>;
   }
 
