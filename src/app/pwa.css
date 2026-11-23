@@ -1,22 +1,305 @@
-.pwa-splash{position:fixed;z-index:100;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#10100f;color:#f2f0e9;animation:splash-out .38s ease 0.72s forwards;pointer-events:none}
-.splash-mark{width:76px;height:76px;display:grid;place-items:center;border:1px solid #c7ee8266;border-radius:23px;color:#c7ee82;box-shadow:0 0 55px #c7ee8218;animation:splash-mark-in .55s cubic-bezier(.2,.8,.2,1) both}
-.splash-wordmark{margin:20px 0 22px;font:700 15px monospace;letter-spacing:.2em}.splash-wordmark span{color:#c7ee82}
-.splash-track{width:104px;height:2px;background:#ffffff1b;overflow:hidden}.splash-track i{display:block;width:40%;height:100%;background:#c7ee82;animation:splash-progress .72s ease-in-out infinite alternate}
-.pwa-splash>small{margin-top:13px;color:#77766e;font:9px monospace;letter-spacing:.18em}
-@keyframes splash-progress{to{transform:translateX(150%)}}@keyframes splash-mark-in{from{opacity:0;transform:scale(.8) rotate(-8deg)}to{opacity:1;transform:scale(1) rotate(0)}}@keyframes splash-out{to{opacity:0;visibility:hidden}}
-.install-backdrop{position:fixed;z-index:90;inset:0;padding:20px;display:grid;place-items:center;background:#060607b8;backdrop-filter:blur(9px);animation:install-fade .2s ease both}
-.install-dialog{position:relative;width:min(100%,390px);padding:30px;border:1px solid #ffffff21;border-radius:18px;background:linear-gradient(145deg,#20201d,#151513 72%);box-shadow:0 25px 90px #000a;animation:install-rise .32s cubic-bezier(.2,.8,.2,1) both}
-.install-close{position:absolute;top:16px;right:16px;width:32px;height:32px;display:grid;place-items:center;border:1px solid #ffffff1c;border-radius:50%;background:transparent;color:#aaa;cursor:pointer;transition:background .18s,color .18s}.install-close:hover{background:#ffffff12;color:#fff}
-.install-icon{width:48px;height:48px;display:grid;place-items:center;margin-bottom:23px;border:1px solid #c7ee8255;border-radius:14px;color:#c7ee82;background:#c7ee8210}
-.install-dialog>.eyebrow{font-size:9px}.install-dialog h2{margin:9px 0 12px;font:500 29px/1.08 Georgia,serif;letter-spacing:-.035em}.install-dialog h2 em{color:#c7ee82;font-weight:400}.install-description,.ios-hint{font-size:13px;line-height:1.65;color:#aaa9a1}.ios-hint{padding:11px 13px;border:1px solid #ffffff17;border-radius:9px;background:#ffffff06}.ios-hint strong{color:#e8e7df}.install-action{width:100%;margin-top:8px;justify-content:center}.install-later{display:block;margin:15px auto 0;padding:8px 12px;border:0;background:transparent;color:#aaa9a1;font-size:12px;cursor:pointer}.install-later:hover{color:white}
-@keyframes install-fade{from{opacity:0}to{opacity:1}}@keyframes install-rise{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-@media(prefers-reduced-motion:reduce){.pwa-splash,.splash-mark,.splash-track i,.install-backdrop,.install-dialog{animation:none!important}.pwa-splash{opacity:0;visibility:hidden}}
+/* =============================================
+   SPLASH SCREEN — ANIME / RETRO TERMINAL STYLE
+   ============================================= */
 
-@media(min-width:761px){
-  .bottom-nav{top:18px;bottom:auto;height:58px;transform:translateX(-50%);transition:top .28s cubic-bezier(.2,.8,.2,1),height .28s ease,padding .28s ease,box-shadow .28s ease,background .28s ease}
-  .bottom-nav.scrolled{top:10px;height:46px;padding:5px;box-shadow:0 8px 30px #000a,0 1px #ffffff0c inset;background:#141411f2}
-  .nav-link{transition:min-width .28s ease,height .28s ease,padding .28s ease,color .2s ease,background .2s ease,font-size .28s ease}
-  .bottom-nav.scrolled .nav-link{height:34px;min-width:78px;font-size:10px;padding-inline:12px}
-  .topbar{padding-top:12px}
-  .shell{padding-top:58px}
+.pwa-splash {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #05050a;
+  color: #f2f0e9;
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 0.38s ease, transform 0.38s ease;
+}
+
+/* Phase: exit */
+.pwa-splash.splash-phase-exit {
+  animation: splash-out 0.42s ease 0.96s forwards;
+}
+
+/* CRT scanlines */
+.splash-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    #00000030 2px,
+    #00000030 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Corner bracket decorations */
+.splash-corner {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-color: #c7ee8244;
+  border-style: solid;
+  z-index: 2;
+  animation: corner-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.splash-corner-tl { top: 20px; left: 20px;  border-width: 2px 0 0 2px; animation-delay: 0.05s; }
+.splash-corner-tr { top: 20px; right: 20px;  border-width: 2px 2px 0 0; animation-delay: 0.1s; }
+.splash-corner-bl { bottom: 20px; left: 20px;  border-width: 0 0 2px 2px; animation-delay: 0.15s; }
+.splash-corner-br { bottom: 20px; right: 20px;  border-width: 0 2px 2px 0; animation-delay: 0.2s; }
+
+@keyframes corner-in {
+  from { opacity: 0; transform: scale(0.4); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Floating kanji field */
+.splash-kanji-field {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.splash-kanji {
+  position: absolute;
+  font-size: 11px;
+  font-family: monospace;
+  color: #c7ee8218;
+  letter-spacing: 0.08em;
+  writing-mode: vertical-rl;
+  animation: kanji-fall 3.5s linear infinite;
+  animation-delay: calc(var(--ki) * 0.52s);
+  left: calc(12% + var(--ki) * 16%);
+  top: -60px;
+}
+
+@keyframes kanji-fall {
+  from { transform: translateY(-40px); opacity: 0.8; }
+  40%  { opacity: 0.3; }
+  to   { transform: translateY(calc(100vh + 60px)); opacity: 0; }
+}
+
+/* Terminal boot sequence */
+.splash-terminal {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font: 11px monospace;
+  color: #c7ee82cc;
+  letter-spacing: 0.08em;
+  min-width: 260px;
+  z-index: 3;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.splash-terminal.terminal-hidden {
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+}
+
+.terminal-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: terminal-line-in 0.18s ease both;
+}
+
+.terminal-prompt { color: #c7ee82; opacity: 0.7; font-size: 10px; }
+
+.terminal-text { color: #c7ee82bb; }
+
+.terminal-line-active .terminal-text { color: #c7ee82; }
+
+.terminal-cursor {
+  display: inline-block;
+  width: 7px;
+  height: 12px;
+  background: #c7ee82;
+  border-radius: 1px;
+  margin-left: 2px;
+  animation: cursor-blink 0.6s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes terminal-line-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Logo phase */
+.splash-logo-wrap {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  z-index: 3;
+  opacity: 0;
+  transform: translateY(10px) scale(0.96);
+  transition: opacity 0.38s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+.splash-logo-wrap.logo-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.splash-mark {
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #c7ee8266;
+  border-radius: 23px;
+  color: #c7ee82;
+  box-shadow: 0 0 55px #c7ee8218, 0 0 0 0 #c7ee8244;
+  animation: splash-mark-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both, mark-pulse 2.4s ease-in-out 0.6s infinite;
+}
+
+@keyframes mark-pulse {
+  0%, 100% { box-shadow: 0 0 40px #c7ee8218; }
+  50%       { box-shadow: 0 0 70px #c7ee8244, 0 0 0 4px #c7ee8212; }
+}
+
+/* Japanese title */
+.splash-title-jp {
+  margin-top: 18px;
+  font: 700 13px monospace;
+  letter-spacing: 0.5em;
+  color: #c7ee8299;
+  animation: jp-fade-in 0.5s ease 0.1s both;
+}
+
+.splash-wordmark {
+  margin: 6px 0 2px;
+  font: 700 15px monospace;
+  letter-spacing: 0.22em;
+  animation: jp-fade-in 0.5s ease 0.18s both;
+}
+.splash-wordmark span { color: #c7ee82; }
+
+/* Sub JP line */
+.splash-sub-jp {
+  font: 10px monospace;
+  color: #c7ee8244;
+  letter-spacing: 0.18em;
+  margin-bottom: 20px;
+  overflow: hidden;
+  animation: jp-fade-in 0.5s ease 0.28s both;
+}
+
+.splash-sub-jp span {
+  display: inline-block;
+  animation: type-in 1.2s steps(14) 0.3s both;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 0;
+  animation: sub-type 0.9s steps(12) 0.4s forwards;
+}
+
+@keyframes sub-type {
+  from { max-width: 0; }
+  to   { max-width: 280px; }
+}
+
+@keyframes jp-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Progress track */
+.splash-track {
+  width: 104px;
+  height: 2px;
+  background: #ffffff1b;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.splash-track i {
+  display: block;
+  width: 40%;
+  height: 100%;
+  background: #c7ee82;
+  animation: splash-progress 0.72s ease-in-out infinite alternate;
+}
+
+.pwa-splash > small {
+  font: 9px monospace;
+  letter-spacing: 0.18em;
+  color: #77766e;
+  margin-top: 4px;
+  animation: jp-fade-in 0.5s ease 0.4s both;
+}
+
+/* Horizontal line sweep effect */
+.splash-line-sweep {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c7ee8266, transparent);
+  animation: line-sweep 1.1s ease-in-out 0s 1 both;
+  z-index: 4;
+}
+
+@keyframes line-sweep {
+  0%   { top: -2px; opacity: 1; }
+  100% { top: 100%; opacity: 0.2; }
+}
+
+/* =============================================
+   KEYFRAMES
+   ============================================= */
+@keyframes splash-progress  { to { transform: translateX(150%); } }
+@keyframes splash-mark-in   { from { opacity:0; transform:scale(.8) rotate(-8deg); } to { opacity:1; transform:scale(1) rotate(0); } }
+@keyframes splash-out       { to { opacity:0; visibility:hidden; } }
+
+/* =============================================
+   INSTALL DIALOG
+   ============================================= */
+.install-backdrop { position:fixed; z-index:90; inset:0; padding:20px; display:grid; place-items:center; background:#060607b8; backdrop-filter:blur(9px); animation:install-fade .2s ease both; }
+.install-dialog { position:relative; width:min(100%,390px); padding:30px; border:1px solid #ffffff21; border-radius:18px; background:linear-gradient(145deg,#20201d,#151513 72%); box-shadow:0 25px 90px #000a; animation:install-rise .32s cubic-bezier(.2,.8,.2,1) both; }
+.install-close { position:absolute; top:16px; right:16px; width:32px; height:32px; display:grid; place-items:center; border:1px solid #ffffff1c; border-radius:50%; background:transparent; color:#aaa; cursor:pointer; transition:background .18s,color .18s; }
+.install-close:hover { background:#ffffff12; color:#fff; }
+.install-icon { width:48px; height:48px; display:grid; place-items:center; margin-bottom:23px; border:1px solid #c7ee8255; border-radius:14px; color:#c7ee82; background:#c7ee8210; }
+.install-dialog>.eyebrow { font-size:9px; }
+.install-dialog h2 { margin:9px 0 12px; font:500 29px/1.08 Georgia,serif; letter-spacing:-.035em; }
+.install-dialog h2 em { color:#c7ee82; font-weight:400; }
+.install-description,.ios-hint { font-size:13px; line-height:1.65; color:#aaa9a1; }
+.ios-hint { padding:11px 13px; border:1px solid #ffffff17; border-radius:9px; background:#ffffff06; }
+.ios-hint strong { color:#e8e7df; }
+.install-action { width:100%; margin-top:8px; justify-content:center; }
+.install-later { display:block; margin:15px auto 0; padding:8px 12px; border:0; background:transparent; color:#aaa9a1; font-size:12px; cursor:pointer; }
+.install-later:hover { color:white; }
+
+@keyframes install-fade { from{opacity:0} to{opacity:1} }
+@keyframes install-rise { from{opacity:0;transform:translateY(12px) scale(.98)} to{opacity:1;transform:translateY(0) scale(1)} }
+
+/* Desktop floating nav */
+@media(min-width:761px) {
+  .bottom-nav { top:18px; bottom:auto; height:58px; transform:translateX(-50%); transition:top .28s cubic-bezier(.2,.8,.2,1),height .28s ease,padding .28s ease,box-shadow .28s ease,background .28s ease; }
+  .bottom-nav.scrolled { top:10px; height:46px; padding:5px; box-shadow:0 8px 30px #000a,0 1px #ffffff0c inset; background:#141411f2; }
+  .nav-link { transition:min-width .28s ease,height .28s ease,padding .28s ease,color .2s ease,background .2s ease,font-size .28s ease; }
+  .bottom-nav.scrolled .nav-link { height:34px; min-width:78px; font-size:10px; padding-inline:12px; }
+  .topbar { padding-top:12px; }
+  .shell { padding-top:58px; }
+}
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce) {
+  .pwa-splash, .splash-mark, .splash-track i,
+  .splash-kanji, .splash-corner, .splash-line-sweep,
+  .install-backdrop, .install-dialog { animation:none !important; }
+  .pwa-splash { opacity:0; visibility:hidden; }
 }
