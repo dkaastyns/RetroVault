@@ -144,19 +144,11 @@ export function usePageHeadingAnim() {
         { opacity: 0, letterSpacing: '0.4em', y: -8 },
         { opacity: 1, letterSpacing: '0.16em', y: 0, duration: 0.6, ease: 'power2.out', delay: 0.05 },
       );
-      // h1 kata per kata
-      const h1 = document.querySelector('.page-heading h1');
-      if (h1) {
-        const text = h1.textContent || '';
-        h1.innerHTML = text
-          .split(' ')
-          .map(w => `<span class="ph-word" style="display:inline-block;opacity:0;margin-right:0.18em">${w}</span>`)
-          .join('');
-        gsap.fromTo('.ph-word',
-          { opacity: 0, y: 28, rotateX: -50 },
-          { opacity: 1, y: 0, rotateX: 0, duration: 0.55, ease: 'back.out(1.5)', stagger: 0.08, delay: 0.2 },
-        );
-      }
+      // h1 heading
+      gsap.fromTo('.page-heading h1',
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'back.out(1.4)', delay: 0.2 },
+      );
       // muted sub
       gsap.fromTo('.page-heading .muted',
         { opacity: 0, y: 14 },
@@ -219,19 +211,11 @@ export function useDetailPageAnim() {
         { opacity: 1, letterSpacing: '0.16em', duration: 0.5, ease: 'power2.out', delay: 0.3 },
       );
 
-      // h1 kata per kata
-      const h1 = document.querySelector('.detail-copy h1');
-      if (h1) {
-        const text = h1.textContent || '';
-        h1.innerHTML = text
-          .split(' ')
-          .map(w => `<span class="dh-word" style="display:inline-block;opacity:0;margin-right:0.18em">${w}</span>`)
-          .join('');
-        gsap.fromTo('.dh-word',
-          { opacity: 0, y: 24, rotateX: -40 },
-          { opacity: 1, y: 0, rotateX: 0, duration: 0.5, ease: 'back.out(1.4)', stagger: 0.07, delay: 0.45 },
-        );
-      }
+      // h1
+      gsap.fromTo('.detail-copy h1',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 0.35 },
+      );
 
       // action buttons
       gsap.fromTo('.detail-copy .button-secondary, .detail-copy .favorite-button, .detail-copy .share-game-button',
@@ -306,27 +290,15 @@ export function useProfileAnim() {
         { opacity: 1, letterSpacing: '0.16em', y: 0, duration: 0.65, ease: 'power2.out', delay: 0.1 },
       );
 
-      // h1 big title — char by char
-      const h1 = document.querySelector('.profile-intro-block h1');
-      if (h1) {
-        const html = h1.innerHTML;
-        // Preserve span tags, animate each visible char
-        h1.innerHTML = html
-          .split('')
-          .map((ch, i) =>
-            ch === '<' ? ch : // let HTML tags through raw
-            `<span class="pc-char" style="display:inline-block;opacity:0" data-i="${i}">${ch}</span>`,
-          )
-          .join('');
-        gsap.fromTo('.pc-char',
-          { opacity: 0, y: 30, rotateX: -55, skewX: 8 },
-          {
-            opacity: 1, y: 0, rotateX: 0, skewX: 0,
-            duration: 0.5, ease: 'back.out(1.6)',
-            stagger: 0.028, delay: 0.35,
-          },
-        );
-      }
+      // h1 big title — char by char (rendered directly in React JSX)
+      gsap.fromTo('.profile-intro-block .pc-char',
+        { opacity: 0, y: 30, rotateX: -55, skewX: 8 },
+        {
+          opacity: 1, y: 0, rotateX: 0, skewX: 0,
+          duration: 0.5, ease: 'back.out(1.6)',
+          stagger: 0.035, delay: 0.35,
+        },
+      );
 
       // intro paragraph
       gsap.fromTo('.profile-intro-block .profile-intro',
@@ -364,24 +336,16 @@ export function useProfileAnim() {
           scrollTrigger: { trigger: '.profile-project', start: 'top 88%', toggleActions: 'play none none none' } },
       );
 
-      // project h2 words
-      const ph2 = document.querySelector('.profile-project h2');
-      if (ph2) {
-        const rawHtml = ph2.innerHTML;
-        // Split by words preserving <em>
-        ph2.innerHTML = rawHtml
-          .replace(/(<[^>]+>|[^<\s]+)/g, match =>
-            match.startsWith('<')
-              ? match
-              : `<span class="pp-word" style="display:inline-block;opacity:0;margin-right:0.15em">${match}</span>`,
-          );
-        gsap.fromTo('.pp-word',
-          { opacity: 0, y: 22, rotateX: -40 },
-          { opacity: 1, y: 0, rotateX: 0, duration: 0.5, ease: 'back.out(1.5)', stagger: 0.06,
-            scrollTrigger: { trigger: '.profile-project h2', start: 'top 88%', toggleActions: 'play none none none' },
-            delay: 0.1 },
-        );
-      }
+      // project h2 words (rendered directly in React JSX)
+      gsap.fromTo('.profile-project .pp-word',
+        { opacity: 0, y: 22, rotateX: -40 },
+        {
+          opacity: 1, y: 0, rotateX: 0,
+          duration: 0.5, ease: 'back.out(1.5)', stagger: 0.08,
+          scrollTrigger: { trigger: '.profile-project h2', start: 'top 88%', toggleActions: 'play none none none' },
+          delay: 0.1,
+        },
+      );
 
       // project actions
       gsap.fromTo('.project-actions .profile-cta',

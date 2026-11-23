@@ -24,7 +24,17 @@
   margin: 19px 0 17px;
   transform-style: preserve-3d;
 }
+.pc-char {
+  display: inline-block;
+  will-change: transform, opacity;
+  transform-origin: center bottom;
+}
 .profile-period { color: #c7ee82; }
+.pp-word {
+  display: inline-block;
+  will-change: transform, opacity;
+  transform-origin: center bottom;
+}
 
 .profile-intro-block .profile-intro {
   max-width: 670px;

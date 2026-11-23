@@ -32,7 +32,21 @@ export default function ProfilePage() {
           <span className="eyebrow-jp" aria-hidden="true">{JP.tentangProyek}</span>
         </p>
         <h1 style={{ perspective: '600px' }}>
-          Hi, player<span className="profile-period">.</span>
+          {'Hi, player'.split('').map((char, i) => (
+            <span
+              key={i}
+              className="pc-char"
+              style={{ display: 'inline-block', opacity: 0 }}
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
+          <span
+            className="pc-char profile-period"
+            style={{ display: 'inline-block', opacity: 0 }}
+          >
+            .
+          </span>
         </h1>
         <p className="profile-intro">
           Saya membuat RetroVault sebagai ruang untuk merawat koleksi game
@@ -90,8 +104,19 @@ export default function ProfilePage() {
         </div>
 
         <h2>
-          Arsip kecil untuk<br />
-          <em>kenangan besar.</em>
+          {'Arsip kecil untuk'.split(' ').map((w, i) => (
+            <span key={i} className="pp-word" style={{ display: 'inline-block', opacity: 0, marginRight: '0.22em' }}>
+              {w}
+            </span>
+          ))}
+          <br />
+          <em>
+            {'kenangan besar.'.split(' ').map((w, i) => (
+              <span key={i} className="pp-word" style={{ display: 'inline-block', opacity: 0, marginRight: '0.22em' }}>
+                {w}
+              </span>
+            ))}
+          </em>
         </h2>
 
         {/* JP tagline row */}
