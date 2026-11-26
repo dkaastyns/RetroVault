@@ -190,7 +190,7 @@ export function useGridAnim(deps: unknown[] = []) {
 /* ─────────────────────────────────────────────
    GAME DETAIL PAGE
 ───────────────────────────────────────────── */
-export function useDetailPageAnim() {
+export function useDetailPageAnim(deps: unknown[] = []) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // back-link
@@ -248,13 +248,14 @@ export function useDetailPageAnim() {
       });
     });
     return () => ctx.revert();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 }
 
 /* ─────────────────────────────────────────────
    CONSOLE DETAIL PAGE
 ───────────────────────────────────────────── */
-export function useConsoleDetailAnim() {
+export function useConsoleDetailAnim(deps: unknown[] = []) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo('.back-link',
@@ -275,7 +276,8 @@ export function useConsoleDetailAnim() {
       scrollReveal('.section-title', {}, undefined, 0);
     });
     return () => ctx.revert();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 }
 
 /* ─────────────────────────────────────────────

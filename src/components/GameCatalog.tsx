@@ -116,7 +116,7 @@ export function GameCatalog({ favoritesOnly = false }: { favoritesOnly?: boolean
       )}
 
       {!favoritesOnly && (
-        <section ref={filterRef} className="catalog-filters" aria-label="Cari dan filter game" style={{ opacity: 0 }}>
+        <section ref={filterRef} className="catalog-filters" aria-label="Cari dan filter game">
           <label className="catalog-search">
             <Search size={17} />
             <span className="sr-only">Cari game</span>

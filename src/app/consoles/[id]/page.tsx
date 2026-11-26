@@ -26,7 +26,7 @@ export default function ConsoleDetailPage() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  useConsoleDetailAnim();
+  useConsoleDetailAnim([item?.name]);
   useGridAnim([item]);
 
   if (loading) return (
@@ -40,17 +40,17 @@ export default function ConsoleDetailPage() {
 
   return (
     <>
-      <Link className="back-link" href="/consoles" style={{ opacity: 0 }}>
+      <Link className="back-link" href="/consoles">
         <ArrowLeft size={16} /> Kembali ke konsol
       </Link>
 
       <section className="console-detail-head">
-        <div className="console-detail-art" style={{ opacity: 0 }}>
+        <div className="console-detail-art">
           {item.image_url
             ? <img src={item.image_url} alt={item.name} />
             : <Gamepad2 size={56} />}
         </div>
-        <div style={{ opacity: 0 }}>
+        <div>
           <p className="eyebrow">{item.manufacturer_name}</p>
           <h1>{item.name}</h1>
           <p className="muted">

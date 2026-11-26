@@ -36,14 +36,12 @@ export default function ProfilePage() {
             <span
               key={i}
               className="pc-char"
-              style={{ display: 'inline-block', opacity: 0 }}
             >
               {char === ' ' ? '\u00A0' : char}
             </span>
           ))}
           <span
             className="pc-char profile-period"
-            style={{ display: 'inline-block', opacity: 0 }}
           >
             .
           </span>
@@ -105,14 +103,14 @@ export default function ProfilePage() {
 
         <h2>
           {'Arsip kecil untuk'.split(' ').map((w, i) => (
-            <span key={i} className="pp-word" style={{ display: 'inline-block', opacity: 0, marginRight: '0.22em' }}>
+            <span key={i} className="pp-word" style={{ marginRight: '0.22em' }}>
               {w}
             </span>
           ))}
           <br />
           <em>
             {'kenangan besar.'.split(' ').map((w, i) => (
-              <span key={i} className="pp-word" style={{ display: 'inline-block', opacity: 0, marginRight: '0.22em' }}>
+              <span key={i} className="pp-word" style={{ marginRight: '0.22em' }}>
                 {w}
               </span>
             ))}

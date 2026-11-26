@@ -27,11 +27,11 @@ export default function Dashboard() {
     <>
       <section className="hero">
         <div className="hero-copy">
-          <p className="eyebrow hero-anim-eyebrow" style={{ opacity: 0 }}>PLAYER ONE, WELCOME BACK</p>
+          <p className="eyebrow hero-anim-eyebrow">PLAYER ONE, WELCOME BACK</p>
           <h1 style={{ perspective: '600px' }}>
             {/* Line 1 — each word animated individually */}
             {'Kenangan lama,'.split(' ').map((word, i) => (
-              <span key={`l1-${i}`} className="hero-word" style={{ display: 'inline-block', opacity: 0, marginRight: '0.22em' }}>
+              <span key={`l1-${i}`} className="hero-word" style={{ marginRight: '0.22em' }}>
                 {word}
               </span>
             ))}
@@ -39,16 +39,16 @@ export default function Dashboard() {
             {/* Line 2 — accent colored words */}
             <span style={{ color: 'var(--acid)' }}>
               {'tersimpan rapi.'.split(' ').map((word, i) => (
-                <span key={`l2-${i}`} className="hero-word" style={{ display: 'inline-block', opacity: 0, marginRight: '0.22em' }}>
+                <span key={`l2-${i}`} className="hero-word" style={{ marginRight: '0.22em' }}>
                   {word}
                 </span>
               ))}
             </span>
           </h1>
-          <p className="hero-anim-desc" style={{ opacity: 0 }}>
+          <p className="hero-anim-desc">
             Arsipkan perjalanan gaming klasikmu: perangkat, game, dan cerita di baliknya.
           </p>
-          <Link className="button-primary hero-anim-cta" href="/games" style={{ opacity: 0 }}>
+          <Link className="button-primary hero-anim-cta" href="/games">
             Buka koleksi <ArrowUpRight size={16} />
           </Link>
         </div>

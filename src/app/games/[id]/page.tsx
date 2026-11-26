@@ -41,7 +41,7 @@ export default function GameDetail() {
   }, [id]);
 
   // Run GSAP once data is ready
-  useDetailPageAnim();
+  useDetailPageAnim([data?.id]);
 
   // Re-trigger review cards if they come after mount
   useEffect(() => {
@@ -71,13 +71,13 @@ export default function GameDetail() {
 
   return (
     <>
-      <Link className="back-link" href="/games" style={{ opacity: 0 }}>
+      <Link className="back-link" href="/games">
         <ArrowLeft size={16} /> Kembali ke katalog
       </Link>
 
       <section className="detail-layout">
         {/* Cover */}
-        <div className="detail-cover" style={{ opacity: 0 }}>
+        <div className="detail-cover">
           {data.image_url
             ? <img src={data.image_url} alt={data.title} />
             : <div className="cover-placeholder">RETRO<br />VAULT</div>
@@ -86,7 +86,7 @@ export default function GameDetail() {
 
         {/* Info */}
         <div className="detail-copy">
-          <p className="eyebrow" style={{ opacity: 0 }}>{data.console_name} · {data.manufacturer_name}</p>
+          <p className="eyebrow">{data.console_name} · {data.manufacturer_name}</p>
           <h1 style={{ perspective: '500px' }}>{data.title}</h1>
 
           <EditGameInfo
