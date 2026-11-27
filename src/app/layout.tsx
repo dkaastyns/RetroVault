@@ -10,6 +10,7 @@ import './pagination.css';
 import './micro-motion.css';
 import './game-edit.css';
 import './asset-history.css';
+import './game-workflow.css';
 import './toast.css';
 import { BottomNav } from '@/components/BottomNav';
 import { ServiceWorker } from '@/components/ServiceWorker';

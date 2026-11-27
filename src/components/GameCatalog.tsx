@@ -12,7 +12,7 @@ import gsap from 'gsap';
 
 const PAGE_SIZE = 8;
 
-export function GameCatalog({ favoritesOnly = false }: { favoritesOnly?: boolean }) {
+export function GameCatalog({ favoritesOnly = false, status = 'active' }: { favoritesOnly?: boolean; status?: 'active' | 'draft' | 'archived' }) {
   const [games, setGames] = useState<Game[]>([]);
   const [consoles, setConsoles] = useState<Console[]>([]);
   const [showForm, setShowForm] = useState(false);
@@ -31,7 +31,7 @@ export function GameCatalog({ favoritesOnly = false }: { favoritesOnly?: boolean
     setLoading(true);
     setLoadError('');
     Promise.all([
-      fetch(`/api/games${favoritesOnly ? '?favorites=true' : ''}`).then(async r => {
+      fetch(`/api/games?status=${status}${favoritesOnly ? '&favorites=true' : ''}`).then(async r => {
         if (!r.ok) throw new Error('Gagal memuat katalog');
         return r.json();
       }),
@@ -46,7 +46,7 @@ export function GameCatalog({ favoritesOnly = false }: { favoritesOnly?: boolean
       .catch(() => { if (active) setLoadError('Data belum dapat dimuat. Periksa koneksi database lalu coba lagi.'); })
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
-  }, [favoritesOnly]);
+  }, [favoritesOnly, status]);
 
   // Animate filter bar in after heading
   useEffect(() => {
@@ -89,7 +89,7 @@ export function GameCatalog({ favoritesOnly = false }: { favoritesOnly?: boolean
       <div className="page-heading">
         <div>
           <p className="eyebrow">{favoritesOnly ? 'DAFTAR TERSIMPAN' : 'ARSIP PERMAINAN'}</p>
-          <h1>{favoritesOnly ? 'Wishlist' : 'Katalog Game'}</h1>
+          <h1>{favoritesOnly ? 'Wishlist' : status === 'draft' ? 'Draft Game' : status === 'archived' ? 'Arsip Game' : 'Katalog Game'}</h1>
           <p className="muted">{favoritesOnly ? 'Game yang kamu tandai untuk dimainkan atau dikoleksi.' : 'Koleksi klasik yang tersimpan di satu tempat.'}</p>
         </div>
         {!favoritesOnly && (
@@ -98,6 +98,8 @@ export function GameCatalog({ favoritesOnly = false }: { favoritesOnly?: boolean
           </button>
         )}
       </div>
+
+      {!favoritesOnly && <nav className="catalog-status-nav" aria-label="Status game"><Link href="/games" aria-current={status==='active'?'page':undefined}>Koleksi</Link><Link href="/drafts" aria-current={status==='draft'?'page':undefined}>Draft</Link><Link href="/archive" aria-current={status==='archived'?'page':undefined}>Arsip</Link></nav>}
 
       {showForm && (
         <div

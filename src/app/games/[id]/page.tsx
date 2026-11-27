@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { ArrowLeft, Star } from 'lucide-react';
+import { ArrowLeft, Star, Pencil, Trash2, Check, X } from 'lucide-react';
 import { FavoriteButton } from '@/components/FavoriteButton';
 import { ReviewForm } from '@/components/ReviewForm';
 import { ShareGameButton } from '@/components/ShareGameButton';
@@ -18,7 +18,7 @@ gsap.registerPlugin(ScrollTrigger);
 type Review = { id: number; game_id: number; rating: number; status_tamat: boolean; review_text: string };
 type Detail = {
   id: number; title: string; genre: string; release_year: number | null; console_name: string;
-  manufacturer_name: string; image_url: string | null; description: string | null; is_favorite: boolean;
+  manufacturer_name: string; image_url: string | null; images: string[]; description: string | null; is_favorite: boolean; status: 'active'|'draft'|'archived';
   transactions: AssetTransaction[];
   reviews: Review[];
 };
@@ -28,6 +28,28 @@ export default function GameDetail() {
   const [data, setData] = useState<Detail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [editingReview, setEditingReview] = useState<number | null>(null);
+  const [reviewDraft, setReviewDraft] = useState({rating: 5, review_text: '', status_tamat: false});
+  const [reviewMessage, setReviewMessage] = useState('');
+
+  async function saveReview(review: Review) {
+    const response = await fetch(`/api/games/${id}/reviews/${review.id}`, {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(reviewDraft)});
+    const result = await response.json();
+    if (!response.ok) { setReviewMessage(result.error || 'Gagal memperbarui ulasan.'); return; }
+    setData(cur=>cur?{...cur,reviews:cur.reviews.map(r=>r.id===review.id?result:r)}:cur); setEditingReview(null); setReviewMessage('Ulasan diperbarui.');
+  }
+  async function deleteReview(review: Review) {
+    if (!window.confirm('Hapus ulasan ini?')) return;
+    const response = await fetch(`/api/games/${id}/reviews/${review.id}`, {method:'DELETE'});
+    if (!response.ok) { setReviewMessage('Gagal menghapus ulasan.'); return; }
+    setData(cur=>cur?{...cur,reviews:cur.reviews.filter(r=>r.id!==review.id)}:cur);
+  }
+  async function changeStatus(status: Detail['status']) {
+    const form = new FormData(); form.set('status',status);
+    const response = await fetch(`/api/games/${id}`,{method:'PUT',body:form});
+    const result = await response.json();
+    if(response.ok) setData(cur=>cur?{...cur,status:result.status}:cur);
+  }
 
   useEffect(() => {
     let active = true;
@@ -83,6 +105,7 @@ export default function GameDetail() {
             : <div className="cover-placeholder">RETRO<br />VAULT</div>
           }
         </div>
+        {(data.images?.length || 0) > 1 && <div className="game-image-gallery" aria-label="Galeri gambar game">{data.images.map((image,index)=><img key={`${image}-${index}`} src={image} alt={`${data.title} ${index+1}`} loading="lazy"/>)}</div>}
 
         {/* Info */}
         <div className="detail-copy">
@@ -91,9 +114,12 @@ export default function GameDetail() {
 
           <EditGameInfo
             gameId={data.id}
+            title={data.title}
+            genre={data.genre}
             description={data.description}
             onSaved={game => setData(cur => cur ? { ...cur, ...game } : cur)}
           />
+          <div className="game-status-control"><span>Status: {data.status==='active'?'Koleksi':data.status==='draft'?'Draft':'Arsip'}</span>{data.status!=='active'&&<button type="button" onClick={()=>changeStatus('active')}>Pindahkan ke koleksi</button>}{data.status!=='draft'&&<button type="button" onClick={()=>changeStatus('draft')}>Jadikan draft</button>}{data.status!=='archived'&&<button type="button" onClick={()=>changeStatus('archived')}>Arsipkan</button>}</div>
           <ShareGameButton gameId={data.id} title={data.title} />
           <FavoriteButton gameId={data.id} initialFavorite={data.is_favorite} />
 
@@ -114,15 +140,24 @@ export default function GameDetail() {
 
           {data.reviews.map(review => (
             <div className="review-card" key={review.id}>
+              {editingReview===review.id ? <>
+                <label>Rating <select value={reviewDraft.rating} onChange={e=>setReviewDraft(v=>({...v,rating:Number(e.target.value)}))}>{[1,2,3,4,5].map(n=><option key={n} value={n}>{n} bintang</option>)}</select></label>
+                <textarea value={reviewDraft.review_text} onChange={e=>setReviewDraft(v=>({...v,review_text:e.target.value}))} maxLength={2000}/>
+                <label><input type="checkbox" checked={reviewDraft.status_tamat} onChange={e=>setReviewDraft(v=>({...v,status_tamat:e.target.checked}))}/> Sudah tamat</label>
+                <button type="button" onClick={()=>saveReview(review)}><Check size={14}/> Simpan</button> <button type="button" onClick={()=>setEditingReview(null)}><X size={14}/> Batal</button>
+              </> : <>
               <span className="stars">
-                {Array.from({ length: review.rating }, (_, i) => (
-                  <Star key={i} size={14} fill="currentColor" />
+                {Array.from({ length: 5 }, (_, i) => (
+                  <Star key={i} size={14} fill={i < review.rating ? 'currentColor' : 'none'} />
                 ))}
               </span>
               <p>{review.review_text || 'Tanpa catatan.'}</p>
               <small>{review.status_tamat ? 'Sudah tamat' : 'Belum tamat'}</small>
+              <div className="review-actions"><button type="button" aria-label="Edit ulasan" onClick={()=>{setReviewDraft({rating:review.rating,review_text:review.review_text,status_tamat:review.status_tamat});setEditingReview(review.id)}}><Pencil size={14}/></button><button type="button" aria-label="Hapus ulasan" onClick={()=>deleteReview(review)}><Trash2 size={14}/></button></div>
+              </>}
             </div>
           ))}
+          {reviewMessage&&<p className="form-message" role="status">{reviewMessage}</p>}
 
           {data.reviews.length === 0 && (
             <p className="muted">Belum ada ulasan. Jadilah yang pertama berbagi kesan.</p>

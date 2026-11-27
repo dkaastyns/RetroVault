@@ -26,11 +26,22 @@ CREATE TABLE IF NOT EXISTS games (
   image_url TEXT,
   image_public_id TEXT,
   description TEXT,
+  status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active','draft','archived')),
   is_favorite BOOLEAN NOT NULL DEFAULT FALSE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 ALTER TABLE games ADD COLUMN IF NOT EXISTS is_favorite BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE games ADD COLUMN IF NOT EXISTS status VARCHAR(20) NOT NULL DEFAULT 'active';
+
+CREATE TABLE IF NOT EXISTS game_images (
+  id BIGSERIAL PRIMARY KEY,
+  game_id BIGINT NOT NULL REFERENCES games(id) ON DELETE CASCADE,
+  image_url TEXT NOT NULL,
+  image_public_id TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_game_images_game ON game_images(game_id);
 
 CREATE TABLE IF NOT EXISTS transactions (
   id BIGSERIAL PRIMARY KEY,
