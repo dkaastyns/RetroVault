@@ -31,6 +31,7 @@ export default function GameDetail() {
   const [editingReview, setEditingReview] = useState<number | null>(null);
   const [reviewDraft, setReviewDraft] = useState({rating: 5, review_text: '', status_tamat: false});
   const [reviewMessage, setReviewMessage] = useState('');
+  const [reviewToDelete, setReviewToDelete] = useState<Review | null>(null);
 
   async function saveReview(review: Review) {
     const response = await fetch(`/api/games/${id}/reviews/${review.id}`, {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(reviewDraft)});
@@ -39,10 +40,9 @@ export default function GameDetail() {
     setData(cur=>cur?{...cur,reviews:cur.reviews.map(r=>r.id===review.id?result:r)}:cur); setEditingReview(null); setReviewMessage('Ulasan diperbarui.');
   }
   async function deleteReview(review: Review) {
-    if (!window.confirm('Hapus ulasan ini?')) return;
     const response = await fetch(`/api/games/${id}/reviews/${review.id}`, {method:'DELETE'});
     if (!response.ok) { setReviewMessage('Gagal menghapus ulasan.'); return; }
-    setData(cur=>cur?{...cur,reviews:cur.reviews.filter(r=>r.id!==review.id)}:cur);
+    setData(cur=>cur?{...cur,reviews:cur.reviews.filter(r=>r.id!==review.id)}:cur); setReviewToDelete(null); setReviewMessage('Ulasan berhasil dihapus.');
   }
   async function changeStatus(status: Detail['status']) {
     const form = new FormData(); form.set('status',status);
@@ -153,7 +153,7 @@ export default function GameDetail() {
               </span>
               <p>{review.review_text || 'Tanpa catatan.'}</p>
               <small>{review.status_tamat ? 'Sudah tamat' : 'Belum tamat'}</small>
-              <div className="review-actions"><button type="button" aria-label="Edit ulasan" onClick={()=>{setReviewDraft({rating:review.rating,review_text:review.review_text,status_tamat:review.status_tamat});setEditingReview(review.id)}}><Pencil size={14}/></button><button type="button" aria-label="Hapus ulasan" onClick={()=>deleteReview(review)}><Trash2 size={14}/></button></div>
+              <div className="review-actions"><button type="button" aria-label="Edit ulasan" onClick={()=>{setReviewDraft({rating:review.rating,review_text:review.review_text,status_tamat:review.status_tamat});setEditingReview(review.id)}}><Pencil size={14}/></button><button type="button" aria-label="Hapus ulasan" onClick={()=>setReviewToDelete(review)}><Trash2 size={14}/></button></div>
               </>}
             </div>
           ))}
@@ -169,6 +169,14 @@ export default function GameDetail() {
           />
         </div>
       </section>
+      {reviewToDelete && <div className="review-confirm-backdrop" onMouseDown={event=>{if(event.target===event.currentTarget)setReviewToDelete(null)}} onKeyDown={event=>{if(event.key==='Escape')setReviewToDelete(null)}}>
+        <section className="review-confirm" role="alertdialog" aria-modal="true" aria-labelledby="review-confirm-title" aria-describedby="review-confirm-description">
+          <span className="review-confirm-icon"><Trash2 size={19}/></span>
+          <h2 id="review-confirm-title">Hapus ulasan?</h2>
+          <p id="review-confirm-description">Ulasan ini akan dihapus dari game dan tidak dapat dipulihkan.</p>
+          <div><button type="button" autoFocus className="button-secondary" onClick={()=>setReviewToDelete(null)}>Batal</button><button type="button" className="review-delete-button" onClick={()=>deleteReview(reviewToDelete)}>Hapus ulasan</button></div>
+        </section>
+      </div>}
     </>
   );
 }
